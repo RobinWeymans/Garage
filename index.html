@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%" class="h-100">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+
+        var code = '';
+        
+        var socket = io();
+        socket.on('clear', () => {
+            console.log('Code cleared by server');
+            alert('Wrong code');
+            code = '';
+        });
+        socket.on('success', () => {
+            console.log('Correct code');
+            alert('Correct code');
+            code = '';
+        });
+
+        document.addEventListener('DOMContentLoaded', (e) => {
+            var els = document.getElementsByClassName("btn-default");
+            Array.prototype.forEach.call(els, function(el) {
+                el.addEventListener('click', (e) => {
+                    code += el.innerHTML;
+                    console.log(code);
+                });
+            });
+            Array.prototype.forEach.call(document.getElementsByClassName("btn-danger"), function(el) {
+                el.addEventListener('click', (e) => {
+                    code = '';
+                    console.log('Code cleared');
+                });
+            });
+            Array.prototype.forEach.call(document.getElementsByClassName("btn-success"), function(el) {
+                el.addEventListener('click', (e) => {
+                    socket.emit('code', code);
+                    console.log('Code sent to server');
+                });
+            });
+        })
+
+
+
+        // on.addEventListener("click", function(){
+        //     //console.log("on");
+        //     socket.emit('on');
+        // });
+        // off.addEventListener("click", function(){
+        //     //console.log("off");
+        //     socket.emit('off');
+        // });	
+        
+    </script>
+</head>
+
+<body style="height:100%">
+
+    <div class="container-fluid" style="height:100%">
+        <div class="row" style="height:16.66%">
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">1</button>
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">2</button>
+        </div>
+        <div class="row" style="height:16.66%">
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">3</button>
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">4</button>
+        </div>
+        <div class="row" style="height:16.66%">
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">5</button>
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">6</button>
+        </div>
+        <div class="row" style="height:16.66%">
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">7</button>
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">8</button>
+        </div>
+        <div class="row" style="height:16.66%">
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">9</button>
+            <button class="btn btn-default col-lg-6 col-sm-6 col-xs-6" style="height:100%">0</button>
+        </div>
+        <div class="row" style="height:16.66%">
+            <button class="btn btn-danger col-lg-6 col-sm-6 col-xs-6" style="height:100%">CLEAR</button>
+            <button class="btn btn-success  col-lg-6 col-sm-6 col-xs-6" style="height:100%">OK</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
