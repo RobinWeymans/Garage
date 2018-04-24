@@ -30,6 +30,7 @@ io.on('connection', function(socket){
         //Pull pin to ground, and release immediatly after
         exec('gpio write 8 0; sleep 1; gpio write 8 1');
 
+        socket.emit('success');
     }else{
         socket.emit('clear');
     }
