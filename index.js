@@ -20,7 +20,7 @@ io.on('connection', function(socket){
     console.log("code " + data);
     if(data === CODE){
         //Success
-        console.log(success);
+        console.log('success, gate will open');
 
         //Open poort
         
